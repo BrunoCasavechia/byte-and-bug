@@ -40,6 +40,8 @@ Runs on the user's Windows machine through Docker Compose. Tests drive it with P
 
 Name "Byte & Bug": a QA in-joke chosen by the user; it should read like a real shop name with the joke hidden in it. UI copy in Brazilian Portuguese.
 
+Visual commitment (user, 2026-11-20): the circuit-board look was rejected. Follow the Brazilian electronics retail standard, with Kabum and Mercado Livre as the craft bar (own name, colours and logo, never theirs), made modern and friendly, "cartuniado": rounded, illustrated, playful but professional. Product and brand names must be realistic (fictional brands, model-style names), not QA jokes.
+
 ## Evidence on Hand
 
 No real products, customers, reviews or prices exist. All catalog data is synthetic and must be labelled as demo data; no invented testimonials or partner logos.

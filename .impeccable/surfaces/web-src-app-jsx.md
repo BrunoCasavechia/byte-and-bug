@@ -7,20 +7,19 @@ related_targets: []
 
 # Byte & Bug web app
 
-Scope: the whole storefront and admin web app (catalog, product, cart, checkout, orders, login, admin, playground). Mode: Operate.
-Audience: QA engineers automating it; portfolio viewers watching recordings. Task: browse, buy, administer, with every state reachable.
-Constraint from user: attention-grabbing but not cluttered.
+Scope: whole storefront and admin. Mode: Operate (home/catalog gets a retail hero and offer strip).
+Status: REDESIGN PENDING. Circuit-board world rejected by the user on 2026-11-20.
 
 ## Direction contract
 
-THESIS: The store is a circuit board: a committed solder-mask green shell carrying components (products) labelled like silkscreen. It refuses the white-and-blue generic storefront and the dark neon gamer shop.
+THESIS: Brazilian electronics retail, played straight at Kabum/Mercado Livre craft level, made modern and friendly ("cartuniado"). Refuses the circuit-board costume and joke naming.
 
-OWN-WORLD: Deep solder-mask green shell (header, filter rail tint, footer); pale FR4-tinted ground for content; copper for primary actions, prices and selection; silkscreen-white condensed uppercase labels for section headers and SKU reference designators (U12, R07); hairline green-grey borders; state colours red/amber only where meaningful.
+OWN-WORLD: Own identity (not Kabum blue/orange, not ML yellow): to be set at build; rounded chunky cards, soft offset-blur shadows, bold friendly type, flat illustrations and an original bug mascot for empty states and banners; real product photography.
 
-STORY: The visitor finds a product, adds it, checks out and sees the order; an admin edits the catalog. A tester reaches every state by name.
+STORY: Shopper sees offers, finds a product, buys with installments/Pix price visible; tester reaches every state by name.
 
-FIRST VIEWPORT: Green header: wordmark left, search centre, user menu and cart (count as a copper via) right. Below: left rail with categories, price range and in-stock filter; main area with result count, sort select and a 3-4 column grid of product cards (designator, name, price in copper, stock, add button).
+FIRST VIEWPORT: Header with logo, big search, account, cart; category bar; hero banner carousel; benefits strip (frete, parcelamento, Pix); offer grid with discount badges, old price, Pix price and "10x sem juros".
 
-FORM: Circuit-board world, candidate 5 of 7, seed:9daf6cf3ddd4e010. Signature move: checkout stepper drawn as a copper trace between pads that lights up as each step completes.
+FORM: seed: none (pinned) — user chose the category standard ("Varejo padrão") with Kabum and Mercado Livre as reference, plus "moderno, cartuniado, profissional".
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
