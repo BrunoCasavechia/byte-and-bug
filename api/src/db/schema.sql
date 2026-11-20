@@ -32,6 +32,9 @@ CREATE TABLE IF NOT EXISTS products (
   stock INTEGER NOT NULL DEFAULT 0 CHECK (stock >= 0),
   colors TEXT[] NOT NULL DEFAULT '{}',
   image_url TEXT,
+  old_price_cents INTEGER,
+  rating NUMERIC(2,1) NOT NULL DEFAULT 0,
+  rating_count INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 

@@ -58,7 +58,7 @@ export function Stock({ stock }) {
 }
 
 export function ProductImage({ product, ...rest }) {
-  return <img src={assetUrl(product.imageUrl) || '/products/acessorios.svg'} alt="" loading="lazy" {...rest} />;
+  return <img src={assetUrl(product.imageUrl) || '/products/placeholder.svg'} alt="" loading="lazy" {...rest} />;
 }
 
 // Radix Dialog: renders in a portal at the end of <body>, traps focus, closes on Esc.

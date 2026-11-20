@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import '@fontsource/barlow/400.css';
-import '@fontsource/barlow/500.css';
-import '@fontsource/barlow/600.css';
-import '@fontsource/barlow/700.css';
-import '@fontsource/barlow-condensed/600.css';
-import '@fontsource/barlow-condensed/700.css';
+import '@fontsource/nunito/400.css';
+import '@fontsource/nunito/600.css';
+import '@fontsource/nunito/700.css';
+import '@fontsource/nunito/800.css';
 import './styles.css';
 import { AuthProvider, CartProvider, ToastProvider } from './store.jsx';
 import { Layout } from './components/Layout.jsx';
 import { RequireAuth } from './components/ui.jsx';
 import { Catalog } from './pages/Catalog.jsx';
+import { Home } from './pages/Home.jsx';
 import { Product } from './pages/Product.jsx';
 import { Cart } from './pages/Cart.jsx';
 import { Checkout } from './pages/Checkout.jsx';
@@ -25,7 +24,8 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: '/', element: <Catalog /> },
+      { path: '/', element: <Home /> },
+      { path: '/produtos', element: <Catalog /> },
       { path: '/produto/:id', element: <Product /> },
       { path: '/carrinho', element: <Cart /> },
       { path: '/checkout', element: <RequireAuth><Checkout /></RequireAuth> },

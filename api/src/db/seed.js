@@ -22,32 +22,33 @@ const CATEGORIES = [
   ['acessorios', 'Acessórios'],
 ];
 
-// [sku, name, brand, category, price in reais, stock, colors, description]
+// [sku, name, brand, category, price, stock, colors, description, oldPrice|null, rating, ratingCount]
+// Brands and products are fictional; ratings are demo data.
 const PRODUCTS = [
-  ['U01', 'Teclado Mecânico Flaky TKL', 'Nullpoint', 'teclados', 349.9, 12, ['Preto', 'Branco'], 'Teclado tenkeyless com switches lineares e cabo USB-C removível.'],
-  ['U02', 'Teclado Retry 60%', 'Nullpoint', 'teclados', 279.0, 3, ['Preto'], 'Compacto 60% com layout ABNT2 e iluminação branca.'],
-  ['U03', 'Teclado Silencioso Office', 'Stacktrace', 'teclados', 129.9, 40, [], 'Teclas de membrana silenciosas e apoio de pulso integrado.'],
-  ['U04', 'Teclado Sem Fio Hotfix', 'Stacktrace', 'teclados', 199.9, 0, ['Cinza'], 'Conexão Bluetooth em até três dispositivos.'],
-  ['R01', 'Mouse Gamer Timeout', 'Nullpoint', 'mouses', 189.9, 25, ['Preto', 'Branco'], 'Sensor óptico de 16.000 DPI e seis botões programáveis.'],
-  ['R02', 'Mouse Vertical Ergonômico', 'Stacktrace', 'mouses', 149.0, 8, [], 'Pegada vertical que reduz a torção do punho.'],
-  ['R03', 'Mouse Sem Fio Breakpoint', 'Assertiva', 'mouses', 99.9, 60, ['Preto', 'Azul', 'Rosa'], 'Receptor USB nano e bateria para 12 meses.'],
-  ['R04', 'Mouse Pad Grande 90x40', 'Assertiva', 'mouses', 79.9, 2, [], 'Superfície de tecido com bordas costuradas.'],
-  ['H01', 'Headset 404 Surround', 'Nullpoint', 'headsets', 429.0, 10, ['Preto'], 'Som surround virtual 7.1 e microfone removível.'],
-  ['H02', 'Headset Sem Fio Rollback', 'Stacktrace', 'headsets', 599.9, 4, ['Preto', 'Branco'], 'Bateria de 30 horas e cancelamento de ruído no microfone.'],
-  ['H03', 'Fone Intra-auricular Ping', 'Assertiva', 'headsets', 89.9, 0, ['Branco'], 'Fone com fio e controle de volume no cabo.'],
-  ['H04', 'Headset USB Daily', 'Assertiva', 'headsets', 159.9, 30, [], 'Feito para reuniões, com botão de mudo no fio.'],
-  ['M01', 'Monitor 24" Full HD Staging', 'Pixelado', 'monitores', 899.0, 7, [], 'Painel IPS de 75 Hz com bordas finas.'],
-  ['M02', 'Monitor 27" QHD Release', 'Pixelado', 'monitores', 1799.0, 5, [], 'Resolução 2560x1440 e 144 Hz.'],
-  ['M03', 'Monitor 34" Ultrawide Merge', 'Pixelado', 'monitores', 2899.0, 1, [], 'Tela curva 21:9 para duas janelas lado a lado.'],
-  ['M04', 'Suporte Articulado Duplo', 'Assertiva', 'monitores', 249.9, 15, [], 'Braços a gás para dois monitores de até 32".'],
-  ['W01', 'Webcam Full HD Standup', 'Stacktrace', 'webcams', 249.0, 18, [], 'Foco automático e microfone duplo.'],
-  ['W02', 'Webcam 4K Demo Day', 'Pixelado', 'webcams', 699.0, 0, [], 'Sensor 4K com correção de luz.'],
-  ['W03', 'Ring Light de Mesa', 'Assertiva', 'webcams', 119.9, 22, [], 'Três tons de luz e haste ajustável.'],
-  ['A01', 'Hub USB-C 7 em 1 Pipeline', 'Nullpoint', 'acessorios', 229.9, 14, [], 'HDMI 4K, três USB-A, leitor SD e carregamento.'],
-  ['A02', 'Cabo USB-C 2 m Trançado', 'Assertiva', 'acessorios', 39.9, 100, ['Preto', 'Branco'], 'Carregamento rápido de 60 W.'],
-  ['A03', 'SSD Externo 1 TB Backup', 'Stacktrace', 'acessorios', 549.0, 9, [], 'Leitura de até 1.050 MB/s.'],
-  ['A04', 'Mochila para Notebook Sprint', 'Assertiva', 'acessorios', 189.0, 11, ['Preto', 'Cinza'], 'Compartimento acolchoado para até 15,6".'],
-  ['A05', 'Patinha Antiderrapante (kit)', 'Assertiva', 'acessorios', 19.9, 200, [], 'Kit com oito pés de silicone para notebook.'],
+  ['U01', 'Teclado Mecânico Velkor K75 Pro TKL', 'Velkor', 'teclados', 349.9, 12, ['Preto', 'Branco'], 'Teclado mecânico tenkeyless com switches lineares pré-lubrificados, RGB por tecla e cabo USB-C removível.', 429.9, 4.8, 1284],
+  ['U02', 'Teclado Mecânico Velkor K60 Compacto 60%', 'Velkor', 'teclados', 279.0, 3, ['Preto'], 'Layout 60% ABNT2, hot-swap e iluminação branca. Ideal para setups compactos.', null, 4.6, 532],
+  ['U03', 'Teclado Kaori Slim K2 Silencioso', 'Kaori', 'teclados', 129.9, 40, [], 'Teclas baixas de membrana silenciosa e apoio de pulso integrado, para escritório.', 159.9, 4.4, 2105],
+  ['U04', 'Teclado Sem Fio Kaori Air K5', 'Kaori', 'teclados', 199.9, 0, ['Cinza'], 'Conexão Bluetooth com até três dispositivos e bateria recarregável de 6 meses.', null, 4.5, 876],
+  ['R01', 'Mouse Gamer Velkor M8 16.000 DPI', 'Velkor', 'mouses', 189.9, 25, ['Preto', 'Branco'], 'Sensor óptico de 16.000 DPI, seis botões programáveis e apenas 63 g.', 239.9, 4.7, 3410],
+  ['R02', 'Mouse Vertical Kaori Ergo V1', 'Kaori', 'mouses', 159.9, 8, [], 'Pegada vertical de 57° que reduz a torção do punho em longas jornadas.', null, 4.5, 418],
+  ['R03', 'Mouse Sem Fio Kaori Air M3', 'Kaori', 'mouses', 119.9, 60, ['Preto', 'Azul', 'Rosa'], 'Receptor USB nano, cliques silenciosos e bateria para 12 meses.', 139.9, 4.6, 1957],
+  ['R04', 'Mousepad Velkor Glide XL 90x40', 'Velkor', 'mouses', 89.9, 2, [], 'Superfície de tecido de alta velocidade com bordas costuradas e base antiderrapante.', null, 4.8, 990],
+  ['H01', 'Headset Gamer Norden H7 Surround 7.1', 'Norden', 'headsets', 429.0, 10, ['Preto'], 'Som surround virtual 7.1, drivers de 50 mm e microfone removível com cancelamento de ruído.', 499.0, 4.7, 1520],
+  ['H02', 'Headset Sem Fio Norden H9 Wireless', 'Norden', 'headsets', 649.0, 4, ['Preto', 'Branco'], 'Bateria de 30 horas, conexão 2,4 GHz de baixa latência e Bluetooth simultâneo.', 749.0, 4.8, 684],
+  ['H03', 'Headset Norden H3 Estéreo P2', 'Norden', 'headsets', 179.9, 0, ['Branco'], 'Leve e confortável, com conector P2 compatível com PC, console e celular.', null, 4.3, 2290],
+  ['H04', 'Headset USB Kaori Call H1 com ANC', 'Kaori', 'headsets', 249.9, 30, [], 'Feito para reuniões: microfone com ANC, botão de mudo no fio e certificação para chamadas.', null, 4.5, 771],
+  ['M01', 'Monitor Pixan View 24" Full HD IPS 75 Hz', 'Pixan', 'monitores', 899.0, 7, [], 'Painel IPS com bordas finas, 75 Hz e ajuste de inclinação.', 999.0, 4.6, 1843],
+  ['M02', 'Monitor Gamer Pixan View 27" QHD 165 Hz', 'Pixan', 'monitores', 1799.0, 5, [], 'Resolução 2560x1440, 165 Hz e 1 ms. HDR10 e FreeSync.', 2099.0, 4.8, 962],
+  ['M03', 'Monitor Pixan Curve 34" UltraWide', 'Pixan', 'monitores', 2899.0, 1, [], 'Tela curva 21:9 de 34 polegadas para duas janelas lado a lado.', null, 4.7, 311],
+  ['M04', 'Monitor Pixan Work 27" 4K USB-C', 'Pixan', 'monitores', 2499.0, 6, [], 'Resolução 4K e USB-C com 65 W: um cabo só para imagem e carregamento do notebook.', 2799.0, 4.6, 205],
+  ['W01', 'Webcam Pixan Cam C2 Full HD', 'Pixan', 'webcams', 249.9, 18, [], 'Full HD 1080p, foco automático e microfone duplo.', 299.9, 4.5, 1388],
+  ['W02', 'Webcam Pixan Cam C4 2K Autofoco', 'Pixan', 'webcams', 449.0, 0, [], 'Sensor 2K com correção automática de luz e tampa de privacidade.', null, 4.7, 402],
+  ['W03', 'Webcam Pixan Cam C1 HD 720p', 'Pixan', 'webcams', 149.9, 22, [], 'Simples e confiável para chamadas de vídeo do dia a dia.', null, 4.2, 1675],
+  ['A01', 'Hub USB-C Tessel 7 em 1', 'Tessel', 'acessorios', 219.9, 14, [], 'HDMI 4K, três USB-A, leitor SD e carregamento de 100 W.', 259.9, 4.6, 1120],
+  ['A02', 'Cabo USB-C Tessel Trançado 2 m', 'Tessel', 'acessorios', 49.9, 100, ['Preto', 'Branco'], 'Carregamento rápido de 60 W e capa trançada resistente.', null, 4.7, 4312],
+  ['A03', 'Suporte Articulado Tessel para Monitor', 'Tessel', 'acessorios', 189.9, 9, [], 'Braço a gás para monitores de até 32" com gestão de cabos.', 229.9, 4.5, 640],
+  ['A04', 'Apoio de Punho Tessel em Gel', 'Tessel', 'acessorios', 69.9, 11, ['Preto', 'Cinza'], 'Gel de memória que alivia a pressão no punho ao digitar.', null, 4.4, 851],
+  ['A05', 'Suporte para Headset Norden Stand', 'Norden', 'acessorios', 99.9, 200, [], 'Base de alumínio com gancho emborrachado e organizador de cabo.', null, 4.6, 307],
 ];
 
 const COUPONS = [
@@ -76,11 +77,12 @@ export async function seed() {
   for (const [slug, name] of CATEGORIES) {
     await pool.query('INSERT INTO categories (slug, name) VALUES ($1, $2)', [slug, name]);
   }
-  for (const [sku, name, brand, cat, price, stock, colors, description] of PRODUCTS) {
+  for (const [sku, name, brand, cat, price, stock, colors, description, oldPrice, rating, ratingCount] of PRODUCTS) {
     await pool.query(
-      `INSERT INTO products (sku, name, brand, category_id, price_cents, stock, colors, description, image_url)
-       VALUES ($1, $2, $3, (SELECT id FROM categories WHERE slug = $4), $5, $6, $7, $8, $9)`,
-      [sku, name, brand, cat, Math.round(price * 100), stock, colors, description, `/products/${cat}.svg`]
+      `INSERT INTO products (sku, name, brand, category_id, price_cents, stock, colors, description, image_url, old_price_cents, rating, rating_count)
+       VALUES ($1, $2, $3, (SELECT id FROM categories WHERE slug = $4), $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [sku, name, brand, cat, Math.round(price * 100), stock, colors, description, `/products/${sku.toLowerCase()}.svg`,
+        oldPrice ? Math.round(oldPrice * 100) : null, rating, ratingCount]
     );
   }
   for (const [code, kind, value, min, expires] of COUPONS) {

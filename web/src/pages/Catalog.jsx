@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, PackageSearch, ShoppingCart, SlidersHorizontal, X } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react';
 import { api, brl } from '../lib/api.js';
-import { useAuth, useCart, useToast } from '../store.jsx';
-import { Alert, ProductImage, Stock } from '../components/ui.jsx';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from '../components/ui.jsx';
+import { ProductCard } from '../components/ProductCard.jsx';
+import { Mascot } from '../components/Mascot.jsx';
 
 const SORTS = [
   ['relevance', 'Relevância'],
@@ -12,64 +12,9 @@ const SORTS = [
   ['price_desc', 'Maior preço'],
   ['name_asc', 'Nome (A-Z)'],
   ['name_desc', 'Nome (Z-A)'],
+  ['rating', 'Mais avaliados'],
+  ['discount', 'Maior desconto'],
 ];
-
-export function useAddToCart() {
-  const { user } = useAuth();
-  const { setCart } = useCart();
-  const toast = useToast();
-  const navigate = useNavigate();
-  return async (product, { quantity = 1, color } = {}) => {
-    if (!user) {
-      toast('Entre na sua conta para adicionar ao carrinho.', 'info');
-      navigate(`/login?voltar=${encodeURIComponent(`/produto/${product.id}`)}`);
-      return false;
-    }
-    try {
-      const cart = await api('/cart/items', { method: 'POST', body: { productId: product.id, quantity, color } });
-      setCart(cart);
-      toast(`${product.name} adicionado ao carrinho.`);
-      return true;
-    } catch (err) {
-      toast(err.message, 'error');
-      return false;
-    }
-  };
-}
-
-function ProductCard({ product }) {
-  const add = useAddToCart();
-  const [busy, setBusy] = useState(false);
-  const needsColor = product.colors.length > 0;
-  return (
-    <article className="product-card" data-testid="product-card" aria-labelledby={`p-${product.id}`}>
-      <Link to={`/produto/${product.id}`} className="product-card__media" tabIndex={-1} aria-hidden="true">
-        <ProductImage product={product} />
-      </Link>
-      <div className="product-card__body">
-        <span className="designator" data-testid="product-sku">{product.sku}</span>
-        <Link to={`/produto/${product.id}`} className="product-card__name" id={`p-${product.id}`} viewTransition>{product.name}</Link>
-        <span className="product-card__brand">{product.brand}</span>
-        <Stock stock={product.stock} />
-        <div className="product-card__foot">
-          <span className="price" data-testid="product-price">{brl(product.price)}</span>
-          {needsColor ? (
-            <Link className="btn btn--secondary btn--sm" to={`/produto/${product.id}`} aria-label={`Escolher cor de ${product.name}`}>Escolher cor</Link>
-          ) : (
-            <button
-              type="button" className="btn btn--primary btn--sm" disabled={!product.inStock || busy}
-              aria-label={`Adicionar ${product.name} ao carrinho`} data-testid="add-to-cart"
-              onClick={async () => { setBusy(true); await add(product); setBusy(false); }}
-            >
-              {busy ? <span className="spinner" aria-hidden="true" /> : <ShoppingCart size={16} aria-hidden="true" />}
-              {product.inStock ? 'Adicionar' : 'Esgotado'}
-            </button>
-          )}
-        </div>
-      </div>
-    </article>
-  );
-}
 
 export function Catalog() {
   const [params, setParams] = useSearchParams();
@@ -131,12 +76,12 @@ export function Catalog() {
           <h2>Preço</h2>
           <form className="price-range" onSubmit={(e) => { e.preventDefault(); update({ minPrice, maxPrice }); }}>
             <div className="field">
-              <label htmlFor="minPrice" className="hint">Mínimo</label>
-              <input id="minPrice" className="input" type="number" min="0" inputMode="decimal" placeholder="R$ 0" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+              <label htmlFor="minPrice" className="hint">Mínimo (R$)</label>
+              <input id="minPrice" className="input" type="number" min="0" inputMode="decimal" placeholder="0" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
             </div>
             <div className="field">
-              <label htmlFor="maxPrice" className="hint">Máximo</label>
-              <input id="maxPrice" className="input" type="number" min="0" inputMode="decimal" placeholder="R$ 3.000" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+              <label htmlFor="maxPrice" className="hint">Máximo (R$)</label>
+              <input id="maxPrice" className="input" type="number" min="0" inputMode="decimal" placeholder="3000" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
             </div>
             <button type="submit" className="btn btn--secondary btn--sm" style={{ gridColumn: '1 / -1' }}>Aplicar preço</button>
           </form>
@@ -150,7 +95,7 @@ export function Catalog() {
       <section aria-labelledby="catalog-title">
         <div className="page-head">
           <div>
-            <h1 id="catalog-title">{categoryName || 'Catálogo'}</h1>
+            <h1 id="catalog-title">{categoryName || (q ? `Resultados para "${q}"` : 'Todos os produtos')}</h1>
             <p className="result-count" data-testid="result-count" aria-live="polite">
               {data ? `${data.total} ${data.total === 1 ? 'produto' : 'produtos'}` : 'Carregando produtos...'}
             </p>
@@ -190,7 +135,7 @@ export function Catalog() {
 
         {data && data.items.length === 0 && (
           <div className="empty" data-testid="empty-results">
-            <PackageSearch size={40} aria-hidden="true" />
+            <Mascot mood="sad" />
             <h2>Nenhum produto encontrado</h2>
             <p>Nada combina com os filtros atuais. Tente outra busca ou limpe os filtros.</p>
             <button type="button" className="btn btn--secondary" onClick={() => setParams(new URLSearchParams())}>Limpar filtros</button>

@@ -38,6 +38,9 @@ export const toProduct = (r) => ({
   inStock: r.stock > 0,
   colors: r.colors,
   imageUrl: r.image_url,
+  oldPrice: r.old_price_cents ? r.old_price_cents / 100 : null,
+  rating: Number(r.rating),
+  ratingCount: r.rating_count,
 });
 
 const SORTS = {
@@ -46,6 +49,8 @@ const SORTS = {
   price_desc: 'p.price_cents DESC, p.id ASC',
   name_asc: 'p.name ASC',
   name_desc: 'p.name DESC',
+  rating: 'p.rating_count DESC, p.id ASC',
+  discount: '(COALESCE(p.old_price_cents, p.price_cents) - p.price_cents) DESC, p.id ASC',
 };
 
 // GET /products?q=&category=&brand=&minPrice=&maxPrice=&inStock=true&sort=price_asc&page=1&limit=12

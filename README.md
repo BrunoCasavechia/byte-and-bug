@@ -65,10 +65,16 @@ No ambiente QA, `POST http://localhost:3333/qa/reset` devolve o banco ao estado 
 - Erros diferentes para token ausente, expirado e inválido (`TOKEN_MISSING`, `TOKEN_EXPIRED`, `TOKEN_INVALID`).
 - No site, o cabeçalho mostra o tempo restante do token. No menu do usuário dá para desligar a renovação automática e ver o redirecionamento para o login quando expira.
 
+**Home e vitrine**
+- Banner em carrossel que troca sozinho (pausa com o mouse), vitrines de ofertas e mais avaliados, departamentos.
+- Preço no Pix (5% off), parcelamento em até 10x, preço antigo e selo de desconto.
+- Calculadora de frete por CEP na página do produto (resultado fixo por CEP, ideal para assert).
+
 **Catálogo e carrinho**
 - Busca, filtro por categoria, preço e estoque, ordenação e paginação (todos refletidos na URL).
 - Produto com cor obrigatória, estoque baixo, esgotado e limite de 10 unidades por item.
-- Cupons com regras diferentes, frete grátis por valor.
+- Cupons com regras diferentes, frete grátis por valor e barra de progresso até o frete grátis.
+- Botões "Comprar agora" e "Adicionar ao carrinho" na página do produto.
 
 **Checkout**
 - Formulário em três etapas, com validação de CPF, CEP, cartão (Luhn), validade e CVV, no site e na API.

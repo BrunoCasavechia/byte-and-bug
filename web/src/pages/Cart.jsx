@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Minus, Plus, ShoppingCart, Tag, Trash2, X } from 'lucide-react';
 import { api, brl } from '../lib/api.js';
+import { installments, pixPrice } from '../lib/price.js';
+import { Mascot } from '../components/Mascot.jsx';
 import { useAuth, useCart, useToast } from '../store.jsx';
 import { Alert, ProductImage } from '../components/ui.jsx';
 
@@ -16,7 +18,10 @@ export function Summary({ cart, children }) {
           <dt>Frete</dt><dd data-testid="summary-shipping">{cart.shipping === 0 ? 'Grátis' : brl(cart.shipping)}</dd>
           <dt className="total">Total</dt><dd className="total" data-testid="summary-total">{brl(cart.total)}</dd>
         </dl>
-        {cart.shipping > 0 && <p className="hint" style={{ fontSize: '0.875rem', color: 'var(--ink-3)' }}>Frete grátis em compras a partir de R$ 299,00.</p>}
+        <div className="summary__pix" data-testid="summary-pix">
+          <strong className="tabular">{brl(pixPrice(cart.total))}</strong> no Pix
+          <div style={{ fontWeight: 600, color: 'var(--ink-2)', fontSize: '0.8125rem' }}>ou {installments(cart.total).label}</div>
+        </div>
         {children}
       </div>
     </aside>
@@ -61,6 +66,19 @@ function CouponForm({ cart }) {
   );
 }
 
+const FREE_FROM = 299;
+function FreeShipping({ cart }) {
+  const base = cart.subtotal - cart.discount;
+  const done = cart.shipping === 0;
+  const pct = Math.min(100, Math.round((base / FREE_FROM) * 100));
+  return (
+    <div className={`free-ship${done ? ' is-done' : ''}`} data-testid="free-shipping">
+      <span>{done ? 'Oba! Seu frete é grátis.' : `Faltam ${brl(FREE_FROM - base)} para ganhar frete grátis.`}</span>
+      <div className="free-ship__bar" aria-hidden="true"><span style={{ width: `${done ? 100 : pct}%` }} /></div>
+    </div>
+  );
+}
+
 function CartItem({ item }) {
   const { setCart } = useCart();
   const toast = useToast();
@@ -87,7 +105,7 @@ function CartItem({ item }) {
     <li className={`cart-item${leaving ? ' is-leaving' : ''}`} data-testid="cart-item">
       <ProductImage product={item} />
       <div className="cart-item__meta">
-        <span className="designator">{item.sku}</span>
+        <span className="designator">Cód. {item.sku}</span>
         <Link to={`/produto/${item.productId}`}>{item.name}</Link>
         {item.color && <span className="hint" style={{ color: 'var(--ink-3)', fontSize: '0.875rem' }}>Cor: {item.color}</span>}
         <span className="tabular" style={{ color: 'var(--ink-2)', fontSize: '0.875rem' }}>{brl(item.unitPrice)} cada</span>
@@ -127,20 +145,23 @@ export function Cart() {
   if (!cart.items.length) {
     return (
       <div className="empty" data-testid="empty-cart">
-        <ShoppingCart size={40} aria-hidden="true" />
+        <Mascot mood="sad" />
         <h1>Seu carrinho está vazio</h1>
         <p>Os produtos que você adicionar aparecem aqui.</p>
-        <Link className="btn btn--primary" to="/">Ver catálogo</Link>
+        <Link className="btn btn--primary" to="/produtos">Ver produtos</Link>
       </div>
     );
   }
   const blocked = cart.items.some((i) => i.warning);
   return (
     <>
-      <div className="page-head"><div><h1>Carrinho</h1><p>{cart.itemCount} {cart.itemCount === 1 ? 'item' : 'itens'}</p></div></div>
+      <div className="page-head"><div><h1>Meu carrinho</h1><p>{cart.itemCount} {cart.itemCount === 1 ? 'item' : 'itens'}</p></div><Link className="btn btn--ghost" to="/produtos">Continuar comprando</Link></div>
       <div className="two-col">
-        <section className="panel" aria-label="Itens do carrinho">
+        <section aria-label="Itens do carrinho">
+          <FreeShipping cart={cart} />
+          <div className="panel">
           <ul className="cart-list">{cart.items.map((i) => <CartItem key={`${i.productId}-${i.color}`} item={i} />)}</ul>
+          </div>
         </section>
         <Summary cart={cart}>
           <CouponForm cart={cart} />

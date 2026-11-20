@@ -1,3 +1,4 @@
+import { Mascot } from '../components/Mascot.jsx';
 import { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { Check, Package } from 'lucide-react';
@@ -20,7 +21,7 @@ export function Orders() {
           <Package size={40} aria-hidden="true" />
           <h2>Nenhum pedido ainda</h2>
           <p>Quando você finalizar uma compra, ela aparece aqui.</p>
-          <Link className="btn btn--primary" to="/">Ver catálogo</Link>
+          <Link className="btn btn--primary" to="/produtos">Ver produtos</Link>
         </div>
       ) : (
         <div className="panel table-wrap">
@@ -62,11 +63,11 @@ export function OrderDetail() {
     <div style={{ display: 'grid', gap: 24 }}>
       {fresh && (
         <section className="panel confirm" data-testid="order-confirmation">
-          <span className="confirm__badge"><Check size={36} aria-hidden="true" /></span>
+          <Mascot />
           <h1>Pedido confirmado</h1>
-          <p>Obrigado pela compra! O número do seu pedido é <strong data-testid="order-number">#{order.id}</strong>.</p>
+          <p>Obrigado pela compra! O número do seu pedido é <strong data-testid="order-number">#{order.id}</strong>. Você vai receber as atualizações da entrega por e-mail.</p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link className="btn btn--primary" to="/">Continuar comprando</Link>
+            <Link className="btn btn--primary" to="/produtos">Continuar comprando</Link>
             <Link className="btn btn--secondary" to="/pedidos">Ver meus pedidos</Link>
           </div>
         </section>

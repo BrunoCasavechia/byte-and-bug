@@ -54,7 +54,7 @@ export const openapi = {
           id: { type: 'integer' }, sku: { type: 'string', example: 'U01' }, name: { type: 'string' }, description: { type: 'string' },
           brand: { type: 'string' }, category: { type: 'object', properties: { slug: { type: 'string' }, name: { type: 'string' } } },
           price: { type: 'number', example: 349.9 }, stock: { type: 'integer' }, inStock: { type: 'boolean' },
-          colors: { type: 'array', items: { type: 'string' } }, imageUrl: { type: 'string' },
+          colors: { type: 'array', items: { type: 'string' } }, imageUrl: { type: 'string' }, oldPrice: { type: 'number', nullable: true }, rating: { type: 'number' }, ratingCount: { type: 'integer' },
         },
       },
       ProductInput: {
@@ -149,7 +149,7 @@ export const openapi = {
           { name: 'minPrice', in: 'query', schema: { type: 'number' } },
           { name: 'maxPrice', in: 'query', schema: { type: 'number' } },
           { name: 'inStock', in: 'query', schema: { type: 'boolean' } },
-          { name: 'sort', in: 'query', schema: { type: 'string', enum: ['relevance', 'price_asc', 'price_desc', 'name_asc', 'name_desc'] } },
+          { name: 'sort', in: 'query', schema: { type: 'string', enum: ['relevance', 'price_asc', 'price_desc', 'name_asc', 'name_desc', 'rating', 'discount'] } },
           { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1 } },
           { name: 'limit', in: 'query', schema: { type: 'integer', minimum: 1, maximum: 50 } },
         ],

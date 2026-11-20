@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { ChevronDown, Clock, LogIn, LogOut, Package, Search, ShieldCheck, ShoppingCart, User } from 'lucide-react';
+import { BadgePercent, ChevronDown, Clock, CreditCard, LogOut, Package, Search, ShieldCheck, ShoppingCart, Truck, User } from 'lucide-react';
+
+const CATS = [['teclados', 'Teclados'], ['mouses', 'Mouses'], ['headsets', 'Headsets'], ['monitores', 'Monitores'], ['webcams', 'Webcams'], ['acessorios', 'Acessórios']];
 import { useAuth, useCart, useToast } from '../store.jsx';
 import { autoRefreshEnabled, setAutoRefresh } from '../lib/api.js';
 import { Logo } from './Logo.jsx';
@@ -10,12 +12,10 @@ function SessionTimer({ expiresAt }) {
   const [now, setNow] = useState(Date.now());
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
   const left = Math.max(0, Math.round((expiresAt - now) / 1000));
-  const mm = String(Math.floor(left / 60)).padStart(1, '0');
-  const ss = String(left % 60).padStart(2, '0');
+  const time = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
   return (
-    <span className={`session tabular${left <= 30 ? ' is-low' : ''}`} data-testid="session-timer" title="Tempo até o token de acesso expirar">
-      <Clock size={14} aria-hidden="true" />
-      {left > 0 ? `Token: ${mm}:${ss}` : 'Token expirado'}
+    <span className={`qa-chip tabular${left <= 30 ? ' is-low' : ''}`} data-testid="session-timer" title="Tempo até o token de acesso expirar">
+      <Clock size={13} aria-hidden="true" />Modo QA · token {left > 0 ? <strong>{time}</strong> : <strong>expirado</strong>}
     </span>
   );
 }
@@ -29,7 +29,8 @@ function UserMenu() {
   if (!user) {
     return (
       <Link className="icon-btn" to="/login" data-testid="header-login">
-        <LogIn size={20} aria-hidden="true" /><span className="icon-btn__label">Entrar</span>
+        <User size={24} aria-hidden="true" />
+        <span className="icon-btn__text"><small>Olá, faça seu</small>Entrar</span>
       </Link>
     );
   }
@@ -38,8 +39,8 @@ function UserMenu() {
     <Menu.Root>
       <Menu.Trigger asChild>
         <button type="button" className="icon-btn" data-testid="user-menu">
-          <User size={20} aria-hidden="true" />
-          <span className="icon-btn__label">{user.name.split(' ')[0]}</span>
+          <User size={24} aria-hidden="true" />
+          <span className="icon-btn__text"><small>Olá, {user.name.split(' ')[0]}</small>Minha conta</span>
           <ChevronDown size={16} aria-hidden="true" />
         </button>
       </Menu.Trigger>
@@ -80,9 +81,11 @@ function CartButton() {
   const count = cart?.itemCount || 0;
   return (
     <Link className="icon-btn" to="/carrinho" aria-label={`Carrinho, ${count} ${count === 1 ? 'item' : 'itens'}`} data-testid="header-cart">
-      <ShoppingCart size={20} aria-hidden="true" />
-      <span className="icon-btn__label">Carrinho</span>
-      {count > 0 && <span className={`via${pulsing ? ' is-pulsing' : ''}`} data-testid="cart-count">{count}</span>}
+      <span className="cart-icon">
+        <ShoppingCart size={26} aria-hidden="true" />
+        {count > 0 && <span className={`cart-count${pulsing ? ' is-pulsing' : ''}`} data-testid="cart-count">{count}</span>}
+      </span>
+      <span className="icon-btn__text"><small>Meu</small>Carrinho</span>
     </Link>
   );
 }
@@ -92,21 +95,21 @@ function SearchBox() {
   const navigate = useNavigate();
   const location = useLocation();
   const [q, setQ] = useState(params.get('q') || '');
-  useEffect(() => { if (location.pathname === '/') setQ(params.get('q') || ''); }, [params, location.pathname]);
+  useEffect(() => { if (location.pathname === '/produtos') setQ(params.get('q') || ''); }, [params, location.pathname]);
   return (
     <form
       className="search" role="search"
       onSubmit={(e) => {
         e.preventDefault();
-        const next = new URLSearchParams(location.pathname === '/' ? params : undefined);
+        const next = new URLSearchParams(location.pathname === '/produtos' ? params : undefined);
         if (q.trim()) next.set('q', q.trim()); else next.delete('q');
         next.delete('page');
-        navigate(`/?${next}`);
+        navigate(`/produtos?${next}`);
       }}
     >
       <label htmlFor="search" className="sr-only">Buscar produtos</label>
-      <Search size={18} aria-hidden="true" />
-      <input id="search" type="search" placeholder="Buscar teclado, mouse, SKU..." value={q} onChange={(e) => setQ(e.target.value)} data-testid="search-input" />
+      <input id="search" type="search" placeholder="O que você procura hoje?" value={q} onChange={(e) => setQ(e.target.value)} data-testid="search-input" />
+      <button type="submit" aria-label="Buscar"><Search size={20} aria-hidden="true" /></button>
     </form>
   );
 }
@@ -114,6 +117,8 @@ function SearchBox() {
 export function Layout() {
   const { user, session } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [params] = useSearchParams();
   const toast = useToast();
 
   useEffect(() => {
@@ -128,6 +133,16 @@ export function Layout() {
   return (
     <div className="app">
       <a href="#conteudo" className="sr-only">Pular para o conteúdo</a>
+      <div className="topbar">
+        <div className="topbar__inner">
+          <div className="topbar__perks">
+            <span><Truck size={14} aria-hidden="true" />Frete grátis acima de R$ 299</span>
+            <span><CreditCard size={14} aria-hidden="true" />Até 10x sem juros</span>
+            <span><BadgePercent size={14} aria-hidden="true" />5% off no Pix</span>
+          </div>
+          {session ? <SessionTimer expiresAt={session.expiresAt} /> : <span className="qa-chip">Loja de demonstração para testes</span>}
+        </div>
+      </div>
       <header className="header">
         <div className="header__inner">
           <Link to="/" className="brand" aria-label="Byte & Bug, página inicial" viewTransition>
@@ -136,29 +151,49 @@ export function Layout() {
           </Link>
           <SearchBox />
           <div className="header__actions">
-            {session && <SessionTimer expiresAt={session.expiresAt} />}
             <UserMenu />
             <CartButton />
           </div>
         </div>
-        <nav className="subnav" aria-label="Seções">
-          <div className="subnav__inner">
-            <NavLink to="/" end viewTransition>Catálogo</NavLink>
-            <NavLink to="/carrinho" viewTransition>Carrinho</NavLink>
-            {user && <NavLink to="/pedidos" viewTransition>Pedidos</NavLink>}
-            {user?.role === 'admin' && <NavLink to="/admin/produtos" viewTransition>Admin</NavLink>}
-            <NavLink to="/playground" viewTransition>Playground</NavLink>
-          </div>
-        </nav>
       </header>
+      <nav className="catnav" aria-label="Departamentos">
+        <div className="catnav__inner">
+          <NavLink to="/produtos?sort=discount" className="catnav__deal" viewTransition><BadgePercent size={16} aria-hidden="true" />Ofertas</NavLink>
+          {CATS.map(([slug, label]) => (
+            <NavLink key={slug} to={`/produtos?category=${slug}`} viewTransition
+              className={() => (location.pathname === '/produtos' && params.get('category') === slug ? 'active' : '')}>{label}</NavLink>
+          ))}
+          <NavLink to="/produtos" end viewTransition className={() => (location.pathname === '/produtos' && !params.get('category') && params.get('sort') !== 'discount' ? 'active' : '')}>Todos</NavLink>
+        </div>
+      </nav>
       <main id="conteudo" className="main">
         <Outlet />
       </main>
       <footer className="footer">
-        <div className="footer__inner">
-          <span>Byte & Bug é uma loja fictícia para praticar automação de testes. Produtos e preços são de demonstração.</span>
-          <span><a href="http://localhost:3333/docs" target="_blank" rel="noreferrer">Documentação da API</a></span>
+        <div className="footer__cols">
+          <div className="footer__about">
+            <Link to="/" className="brand"><Logo size={32} /><span className="brand__word">Byte <span>&amp;</span> Bug</span></Link>
+            <p>Periféricos e eletrônicos para montar o seu setup, com entrega para todo o Brasil.</p>
+            <div className="footer__pay" aria-label="Formas de pagamento"><span>Pix</span><span>Cartão</span><span>Boleto</span></div>
+          </div>
+          <div>
+            <h2>Ajuda</h2>
+            <ul><li><Link to="/pedidos">Meus pedidos</Link></li><li><Link to="/carrinho">Meu carrinho</Link></li><li><span>Trocas em até 7 dias</span></li></ul>
+          </div>
+          <div>
+            <h2>Departamentos</h2>
+            <ul>{CATS.slice(0, 4).map(([slug, label]) => <li key={slug}><Link to={`/produtos?category=${slug}`}>{label}</Link></li>)}</ul>
+          </div>
+          <div>
+            <h2>Área de testes</h2>
+            <ul>
+              <li><Link to="/playground" data-testid="footer-playground">Playground</Link></li>
+              <li><a href="http://localhost:3333/docs" target="_blank" rel="noreferrer">Documentação da API</a></li>
+              {user?.role === 'admin' && <li><Link to="/admin/produtos">Painel admin</Link></li>}
+            </ul>
+          </div>
         </div>
+        <div className="footer__legal"><div>Byte &amp; Bug é uma loja fictícia criada para praticar automação de testes. Produtos, marcas, preços e avaliações são dados de demonstração.</div></div>
       </footer>
     </div>
   );

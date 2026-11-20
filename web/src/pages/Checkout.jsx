@@ -107,7 +107,7 @@ export function Checkout() {
   const e = errors;
   return (
     <>
-      <div className="page-head"><h1>Finalizar compra</h1></div>
+      <div className="page-head"><h1>Finalizar compra</h1><span className="checkout-secure"><Lock size={16} aria-hidden="true" />Compra 100% segura</span></div>
       <Trace step={step} />
       <div className="two-col">
         <section className="panel" aria-labelledby="step-title">
@@ -151,13 +151,13 @@ export function Checkout() {
             {step === 2 && (
               <div style={{ display: 'grid', gap: 16 }} data-testid="review">
                 <div className="review-block">
-                  <h3>Entrega</h3>
+                  <h3>Entrega <button type="button" className="link-btn" onClick={() => setStep(0)}>Alterar</button></h3>
                   <span>{address.fullName}</span>
                   <span>{address.street}, {address.number}{address.complement ? ` - ${address.complement}` : ''}</span>
                   <span>{address.city}/{address.state} · CEP {address.cep}</span>
                 </div>
                 <div className="review-block">
-                  <h3>Pagamento</h3>
+                  <h3>Pagamento <button type="button" className="link-btn" onClick={() => setStep(1)}>Alterar</button></h3>
                   <span className="tabular">Cartão final {payment.cardNumber.replace(/\D/g, '').slice(-4)} · {payment.cardName}</span>
                 </div>
                 <div className="review-block">

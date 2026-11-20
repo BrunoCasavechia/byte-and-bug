@@ -1,10 +1,11 @@
-export function Logo({ size = 30 }) {
+export function Logo({ size = 38 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="7" fill="#11402f" />
-      <path d="M8 9h7a4 4 0 0 1 0 8H8zm0 8h8a4 4 0 0 1 0 8H8z" fill="none" stroke="#f4f7f2" strokeWidth="2.4" />
-      <circle cx="24" cy="9" r="2.6" fill="#e9a15f" />
-      <path d="M24 11.6V20" stroke="#e9a15f" strokeWidth="2" />
+    <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
+      <rect width="40" height="40" rx="12" fill="#5b3df5" />
+      <path d="M15 11 12 6M25 11l3-5" stroke="#ffc83d" strokeWidth="2.5" strokeLinecap="round" />
+      <ellipse cx="20" cy="23" rx="11" ry="12" fill="#fff" />
+      <path d="M20 12v23" stroke="#5b3df5" strokeWidth="2.5" />
+      <circle cx="16" cy="19" r="2" fill="#1a1446" /><circle cx="24" cy="19" r="2" fill="#1a1446" />
     </svg>
   );
 }
