@@ -27,6 +27,12 @@ docker compose --env-file .env.qa down
 | Contrato da API (Swagger) | http://localhost:3333/docs |
 | Banco (Postgres) | localhost:5432, usuário `bytebug`, senha `bytebug` |
 
+### Na nuvem (Render)
+
+O arquivo `render.yaml` descreve a loja inteira: site estático, API e banco Postgres. No Render, use **New > Blueprint** e escolha este repositório. Depois disso, cada `git push` na branch `main` publica a versão nova sozinho (CI/CD).
+
+No plano gratuito, a API "dorme" depois de 15 minutos sem uso e leva cerca de 1 minuto para acordar. O banco gratuito do Render expira em 30 dias. Para um banco sem prazo, troque a variável `DATABASE_URL` por um Postgres do Supabase ou do Neon e defina `DATABASE_SSL=true`.
+
 ### Como funciona como em empresa
 
 Os dois ambientes usam **o mesmo código**. O que muda é a configuração (arquivos `.env.dev` e `.env.qa`): tempo do token, segredo do JWT e se as rotas de QA existem. É o mesmo modelo de dev, QA/homologação e produção numa empresa.

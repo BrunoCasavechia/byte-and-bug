@@ -10,7 +10,9 @@ export const config = {
   // Short on purpose so tests can exercise token expiry. Seconds.
   accessTokenTtl: Number(env.ACCESS_TOKEN_TTL_SECONDS || 120),
   refreshTokenTtl: Number(env.REFRESH_TOKEN_TTL_SECONDS || 60 * 60 * 24),
-  corsOrigin: env.CORS_ORIGIN || 'http://localhost:3000',
+  // Accepts full URLs or bare hosts (Render passes the host only), comma separated.
+  corsOrigin: (env.CORS_ORIGIN || 'http://localhost:3000').split(',').map((o) => (o.startsWith('http') ? o : `https://${o}`)).join(','),
+  databaseSsl: env.DATABASE_SSL === 'true',
   enableQaRoutes: (env.ENABLE_QA_ROUTES || 'true') === 'true',
   uploadDir: env.UPLOAD_DIR || './uploads',
 };

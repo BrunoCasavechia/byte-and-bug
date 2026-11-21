@@ -1,3 +1,4 @@
+import { API_URL } from '../lib/api.js';
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { BadgePercent, ChevronDown, Clock, CreditCard, LogOut, Package, Search, ShieldCheck, ShoppingCart, Truck, User } from 'lucide-react';
@@ -188,7 +189,7 @@ export function Layout() {
             <h2>Área de testes</h2>
             <ul>
               <li><Link to="/playground" data-testid="footer-playground">Playground</Link></li>
-              <li><a href="http://localhost:3333/docs" target="_blank" rel="noreferrer">Documentação da API</a></li>
+              <li><a href={`${API_URL}/docs`} target="_blank" rel="noreferrer">Documentação da API</a></li>
               {user?.role === 'admin' && <li><Link to="/admin/produtos">Painel admin</Link></li>}
             </ul>
           </div>

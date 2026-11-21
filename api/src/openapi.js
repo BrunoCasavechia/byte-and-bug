@@ -16,7 +16,7 @@ export const openapi = {
       '**Cupons:** BYTE10 (10%), FRETEGRATIS, MIN500 (15% acima de R$ 500), EXPIRADO.\n\n' +
       '**Cartões:** 4111 1111 1111 1111 aprova; 4000 0000 0000 0002 é recusado (402).',
   },
-  servers: [{ url: 'http://localhost:3333' }],
+  servers: [{ url: '/', description: 'Este servidor' }],
   tags: [
     { name: 'Auth' }, { name: 'Products' }, { name: 'Cart' }, { name: 'Orders' }, { name: 'QA', description: 'Só no ambiente qa' },
   ],

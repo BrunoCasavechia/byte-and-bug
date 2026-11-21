@@ -294,7 +294,7 @@ function StructuresTab() {
       </Card>
       <Card title="Nova aba" testId="play-newtab">
         <p>Abre a documentação da API em outra aba. Use expect_page.</p>
-        <a className="btn btn--secondary" href="http://localhost:3333/docs" target="_blank" rel="noreferrer" style={{ justifySelf: 'start' }}>
+        <a className="btn btn--secondary" href={`${API_URL}/docs`} target="_blank" rel="noreferrer" style={{ justifySelf: 'start' }}>
           <ExternalLink size={16} aria-hidden="true" />Abrir documentação
         </a>
       </Card>

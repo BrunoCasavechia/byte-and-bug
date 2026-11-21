@@ -2,7 +2,9 @@
 // API answers 401 TOKEN_EXPIRED it tries /auth/refresh once and repeats the call
 // (only if "auto-refresh" is on). Tokens live in localStorage so Playwright's
 // storage_state can reuse a logged-in session.
-export const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3333').replace(/\/$/, '');
+// VITE_API_URL: full URL (local/Docker). VITE_API_HOST: just the host, set by Render in the cloud.
+const env = import.meta.env;
+export const API_URL = (env.VITE_API_URL || (env.VITE_API_HOST ? `https://${env.VITE_API_HOST}` : 'http://localhost:3333')).replace(/\/$/, '');
 
 const KEY = 'bb.session';
 
