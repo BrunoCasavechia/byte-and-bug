@@ -26,11 +26,9 @@ services:
         fromDatabase:
           name: byte-and-bug-db
           property: connectionString
+      # Endereço público do site (o "host" do Render é o nome interno, não serve para o navegador).
       - key: CORS_ORIGIN
-        fromService:
-          type: web
-          name: byte-and-bug-web
-          property: host
+        value: https://byte-and-bug-web.onrender.com
 
   - type: web
     name: byte-and-bug-web
@@ -43,11 +41,8 @@ services:
         source: /*
         destination: /index.html
     envVars:
-      - key: VITE_API_HOST
-        fromService:
-          type: web
-          name: byte-and-bug-api
-          property: host
+      - key: VITE_API_URL
+        value: https://byte-and-bug-api.onrender.com
 
 databases:
   - name: byte-and-bug-db
