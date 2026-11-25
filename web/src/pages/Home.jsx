@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { BadgePercent, CreditCard, RotateCcw, Truck } from 'lucide-react';
 import { api } from '../lib/api.js';
 import { ProductCard } from '../components/ProductCard.jsx';
-import { Mascot } from '../components/Mascot.jsx';
 
 const SLIDES = [
   { tag: 'Semana do Setup', title: 'Seu setup gamer começa aqui', text: 'Teclados mecânicos, mouses leves e headsets com até 22% off.', cta: 'Ver ofertas', to: '/produtos?sort=discount', art: ['/products/u01.svg', '/products/r01.svg'] },
@@ -24,7 +23,6 @@ function Hero() {
     <section className="hero" aria-roledescription="carrossel" aria-label="Destaques" data-testid="hero"
       onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
       <div className="hero-slide" key={i} aria-roledescription="slide" aria-label={`${i + 1} de ${SLIDES.length}`}>
-        <span className="hero__tag">{s.tag}</span>
         <h1>{s.title}</h1>
         <p>{s.text}</p>
         <Link className="btn btn--primary btn--lg" to={s.to} data-testid="hero-cta">{s.cta}</Link>
@@ -33,7 +31,6 @@ function Hero() {
         <div style={{ position: 'relative', width: 'min(100%, 460px)' }}>
           <img src={s.art[0]} alt="" style={{ width: '78%', borderRadius: 22, boxShadow: '0 18px 40px rgb(17 12 51 / .35)', display: 'block' }} />
           <img src={s.art[1]} alt="" style={{ position: 'absolute', width: '48%', right: 0, bottom: -26, borderRadius: 18, border: '4px solid #fff', boxShadow: '0 12px 30px rgb(17 12 51 / .35)' }} />
-          <Mascot className="mascot" />
         </div>
       </div>
       <div className="hero__dots" role="group" aria-label="Escolher destaque">
@@ -93,11 +90,11 @@ export function Home() {
       <div className="promo">
         <Link to="/produtos" className="promo__card promo__card--sun">
           <div><h3>10% off na primeira compra</h3><p>Use o cupom no carrinho.</p><code>BYTE10</code></div>
-          <Mascot className="mascot" />
+          <BadgePercent size={88} strokeWidth={1.25} aria-hidden="true" />
         </Link>
         <Link to="/produtos" className="promo__card promo__card--mint">
           <div><h3>Frete grátis em qualquer valor</h3><p>Válido para todo o Brasil.</p><code>FRETEGRATIS</code></div>
-          <Truck size={96} strokeWidth={1.5} aria-hidden="true" />
+          <Truck size={88} strokeWidth={1.25} aria-hidden="true" />
         </Link>
       </div>
 

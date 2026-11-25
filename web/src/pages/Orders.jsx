@@ -1,4 +1,3 @@
-import { Mascot } from '../components/Mascot.jsx';
 import { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { Check, Package } from 'lucide-react';
@@ -63,7 +62,7 @@ export function OrderDetail() {
     <div style={{ display: 'grid', gap: 24 }}>
       {fresh && (
         <section className="panel confirm" data-testid="order-confirmation">
-          <Mascot />
+          <span className="confirm__badge"><Check size={32} aria-hidden="true" /></span>
           <h1>Pedido confirmado</h1>
           <p>Obrigado pela compra! O número do seu pedido é <strong data-testid="order-number">#{order.id}</strong>. Você vai receber as atualizações da entrega por e-mail.</p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>

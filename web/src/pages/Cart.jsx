@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Minus, Plus, ShoppingCart, Tag, Trash2, X } from 'lucide-react';
 import { api, brl } from '../lib/api.js';
 import { installments, pixPrice } from '../lib/price.js';
-import { Mascot } from '../components/Mascot.jsx';
 import { useAuth, useCart, useToast } from '../store.jsx';
 import { Alert, ProductImage } from '../components/ui.jsx';
 
@@ -145,7 +144,7 @@ export function Cart() {
   if (!cart.items.length) {
     return (
       <div className="empty" data-testid="empty-cart">
-        <Mascot mood="sad" />
+        <span className="empty__icon"><ShoppingCart size={28} aria-hidden="true" /></span>
         <h1>Seu carrinho está vazio</h1>
         <p>Os produtos que você adicionar aparecem aqui.</p>
         <Link className="btn btn--primary" to="/produtos">Ver produtos</Link>

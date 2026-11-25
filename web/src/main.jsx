@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import '@fontsource/nunito/400.css';
-import '@fontsource/nunito/600.css';
-import '@fontsource/nunito/700.css';
-import '@fontsource/nunito/800.css';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/600.css';
+import '@fontsource/manrope/700.css';
 import './styles.css';
 import { AuthProvider, CartProvider, ToastProvider } from './store.jsx';
 import { Layout } from './components/Layout.jsx';

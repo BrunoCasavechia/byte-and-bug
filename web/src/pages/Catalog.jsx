@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PackageSearch, SlidersHorizontal, X } from 'lucide-react';
 import { api, brl } from '../lib/api.js';
 import { Alert } from '../components/ui.jsx';
 import { ProductCard } from '../components/ProductCard.jsx';
-import { Mascot } from '../components/Mascot.jsx';
 
 const SORTS = [
   ['relevance', 'Relevância'],
@@ -135,7 +134,7 @@ export function Catalog() {
 
         {data && data.items.length === 0 && (
           <div className="empty" data-testid="empty-results">
-            <Mascot mood="sad" />
+            <span className="empty__icon"><PackageSearch size={28} aria-hidden="true" /></span>
             <h2>Nenhum produto encontrado</h2>
             <p>Nada combina com os filtros atuais. Tente outra busca ou limpe os filtros.</p>
             <button type="button" className="btn btn--secondary" onClick={() => setParams(new URLSearchParams())}>Limpar filtros</button>
