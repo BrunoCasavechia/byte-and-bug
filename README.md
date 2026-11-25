@@ -10,7 +10,7 @@ A ideia é ter num lugar só os desafios que aparecem em sistemas reais de empre
 Pré-requisito: [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash
-# Ambiente de QA (token de 2 minutos e rota de reset ligada)
+# Ambiente de QA (token de 15 minutos e rota de reset ligada)
 docker compose --env-file .env.qa up -d --build
 
 # Ambiente de desenvolvimento (token de 15 minutos, sem rotas de QA)

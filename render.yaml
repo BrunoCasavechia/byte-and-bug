@@ -14,10 +14,11 @@ services:
         value: qa
       - key: ENABLE_QA_ROUTES
         value: "true"
+      # 15 min, como numa loja real. O refresh token mantém a sessão por 7 dias.
       - key: ACCESS_TOKEN_TTL_SECONDS
-        value: "120"
+        value: "900"
       - key: REFRESH_TOKEN_TTL_SECONDS
-        value: "3600"
+        value: "604800"
       - key: JWT_SECRET
         generateValue: true
       - key: UPLOAD_DIR
