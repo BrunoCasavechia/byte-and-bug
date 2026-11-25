@@ -189,6 +189,7 @@ export function Layout() {
             <h2>Área de testes</h2>
             <ul>
               <li><Link to="/playground" data-testid="footer-playground">Playground</Link></li>
+              <li><Link to="/desenvolvedores/autenticacao">Guia de autenticação</Link></li>
               <li><a href={`${API_URL}/docs`} target="_blank" rel="noreferrer">Documentação da API</a></li>
               {user?.role === 'admin' && <li><Link to="/admin/produtos">Painel admin</Link></li>}
             </ul>

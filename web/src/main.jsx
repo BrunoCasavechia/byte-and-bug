@@ -18,6 +18,7 @@ import { Login, Register } from './pages/Auth.jsx';
 import { AdminProductForm, AdminProducts } from './pages/admin/AdminProducts.jsx';
 import { Playground } from './pages/Playground.jsx';
 import { NotFound } from './pages/NotFound.jsx';
+import { DevGuide } from './pages/DevGuide.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: '/admin/produtos/novo', element: <RequireAuth role="admin"><AdminProductForm /></RequireAuth> },
       { path: '/admin/produtos/:id', element: <RequireAuth role="admin"><AdminProductForm /></RequireAuth> },
       { path: '/playground', element: <Playground /> },
+      { path: '/desenvolvedores/autenticacao', element: <DevGuide /> },
       { path: '*', element: <NotFound /> },
     ],
   },
